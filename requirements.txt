@@ -1,3 +1,3 @@
-pygame
+Pip install pygame
 random
 sys
