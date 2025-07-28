@@ -1,158 +1,60 @@
 # ===============================================
-# TETRIS GAME - REQUIREMENTS.TXT
+# STREAMLIT TETRIS GAME - DEPLOYMENT REQUIREMENTS
 # ===============================================
-# This file contains all dependencies needed to run the Tetris game
-# Choose the section that matches your deployment method
+# Optimized for Streamlit Cloud, Heroku, and other hosting platforms
 
 # ===============================================
-# CORE DEPENDENCIES (Required for all versions)
+# CORE STREAMLIT DEPENDENCIES (Required)
 # ===============================================
 
-# For Python/Pygame Desktop Version
-pygame==2.5.2
-
-# For Streamlit Web Version
 streamlit==1.28.1
 
 # ===============================================
-# WEB DEPLOYMENT DEPENDENCIES
+# PYTHON VERSION COMPATIBILITY
 # ===============================================
-
-# Streamlit Components (for HTML embedding)
-streamlit-components-v1==0.0.1
-
-# Web server and hosting
-gunicorn==21.2.0          # WSGI server for production
-uvicorn==0.24.0           # ASGI server (alternative)
-fastapi==0.104.1          # If using FastAPI backend
+# Ensure compatibility with Streamlit Cloud
+# Python 3.8+ is recommended for Streamlit
 
 # ===============================================
-# DEVELOPMENT DEPENDENCIES
+# OPTIONAL ENHANCEMENTS
 # ===============================================
 
-# Code formatting and linting
-black==23.10.1            # Code formatter
-flake8==6.1.0             # Linter
-pylint==3.0.2             # Advanced linter
+# Uncomment these lines if you want additional features:
 
-# Testing
-pytest==7.4.3            # Testing framework
-pytest-cov==4.1.0        # Coverage testing
+# For enhanced UI components
+ streamlit-extras==0.3.5
+ streamlit-option-menu==0.3.6
 
-# Type checking
-mypy==1.7.1               # Static type checker
+# For data visualization (game statistics)
+ plotly==5.17.0
+ pandas==2.1.3
 
-# ===============================================
-# DATA HANDLING (Optional enhancements)
-# ===============================================
-
-# For high scores/save data
-pandas==2.1.3             # Data manipulation
-numpy==1.25.2             # Numerical computing
-json5==0.9.14             # Enhanced JSON support
+# For better mobile experience
+streamlit-aggrid==0.3.4
 
 # ===============================================
-# UI/UX ENHANCEMENTS (Optional)
+# PRODUCTION OPTIMIZATIONS
 # ===============================================
 
-# Enhanced Streamlit components
-streamlit-extras==0.3.5   # Additional Streamlit widgets
-streamlit-option-menu==0.3.6  # Custom menu components
-plotly==5.17.0            # Interactive charts for stats
+# Uncomment for production deployments:
+ gunicorn==21.2.0          # For Heroku
+ python-dotenv==1.0.0      # Environment variables
 
 # ===============================================
-# DEPLOYMENT SPECIFIC
+# DEPLOYMENT PLATFORM NOTES
 # ===============================================
-
-# For Heroku deployment
-python-dotenv==1.0.0      # Environment variables
-
-# For AWS/Cloud deployment
-boto3==1.34.0             # AWS SDK
-requests==2.31.0          # HTTP requests
-
-# ===============================================
-# SECURITY & PERFORMANCE
-# ===============================================
-
-# Security
-cryptography==41.0.7      # Encryption (if adding user accounts)
-
-# Performance monitoring
-psutil==5.9.6             # System monitoring
-memory-profiler==0.61.0   # Memory usage tracking
-
-# ===============================================
-# MOBILE/RESPONSIVE SUPPORT
-# ===============================================
-
-# Touch controls and mobile optimization
-streamlit-mobile==0.1.0   # Mobile-optimized components
-
-# ===============================================
-# AUDIO/SOUND EFFECTS (Optional)
-# ===============================================
-
-# Sound system (if adding audio)
-pydub==0.25.1             # Audio processing
-simpleaudio==1.0.4        # Simple audio playback
-
-# ===============================================
-# DATABASE (Optional - for high scores)
-# ===============================================
-
-# SQLite (built into Python, no installation needed)
-# For advanced database needs:
-sqlalchemy==2.0.23        # Database ORM
-sqlite3                   # Built-in SQLite support
-
-# ===============================================
-# ANALYTICS (Optional)
-# ===============================================
-
-# Usage analytics
-google-analytics==0.1.0   # Google Analytics integration
-
-# ===============================================
-# VERSION COMPATIBILITY
-# ===============================================
-
-# Python version requirement
-# python>=3.8,<4.0
-
-# ===============================================
-# PLATFORM SPECIFIC
-# ===============================================
-
-# Windows specific
-pywin32==306; sys_platform == "win32"
-
-# macOS specific  
-pyobjc==10.0; sys_platform == "darwin"
-
-# Linux specific
-python3-dev; sys_platform == "linux"
-
-# ===============================================
-# MINIMAL REQUIREMENTS (Essential only)
-# ===============================================
-# If you want minimal installation, use only these:
-# pygame==2.5.2
-# streamlit==1.28.1
-
-# ===============================================
-# INSTALLATION COMMANDS
-# ===============================================
-# 
-# For desktop version only:
-# pip install pygame
 #
-# For web version only: 
-# pip install streamlit
+# STREAMLIT CLOUD:
+# - Only 'streamlit' is required
+# - Platform handles most dependencies automatically
+# - Keep this file minimal for faster deployment
 #
-# For full development setup:
-# pip install -r requirements.txt
+# HEROKU:
+# - Add 'gunicorn' if using custom server
+# - May need 'python-dotenv' for config
 #
-# For production deployment:
-# pip install pygame streamlit gunicorn
+# RENDER/RAILWAY:
+# - Usually just 'streamlit' is sufficient
+# - Platform auto-detects Python version
+#
 # ===============================================
