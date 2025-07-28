@@ -27,32 +27,6 @@
             color: #333;
         }
 
-        .background-particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            animation: float 6s infinite linear;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
-        }
-
         .container {
             display: flex;
             justify-content: center;
@@ -100,24 +74,6 @@
             overflow: hidden;
         }
 
-        .game-board::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
-            border-radius: 17px;
-            z-index: -1;
-            animation: borderGlow 2s linear infinite;
-        }
-
-        @keyframes borderGlow {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
         .light-mode .game-board {
             background: rgba(255, 255, 255, 0.3);
             border-color: rgba(0, 0, 0, 0.2);
@@ -147,23 +103,6 @@
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .panel::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.5s;
-        }
-
-        .panel:hover::before {
-            left: 100%;
         }
 
         .panel:hover {
@@ -203,14 +142,6 @@
         .score-item:hover {
             background: rgba(255, 255, 255, 0.1);
             transform: scale(1.02);
-        }
-
-        .combo-display {
-            text-align: center;
-            font-size: 16px;
-            color: #4ecdc4;
-            font-weight: bold;
-            margin-top: 10px;
         }
 
         .next-hold-container {
@@ -279,23 +210,6 @@
             transition: all 0.3s ease;
             margin-bottom: 20px;
             font-family: 'Orbitron', monospace;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .theme-toggle::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.3s;
-        }
-
-        .theme-toggle:hover::before {
-            left: 100%;
         }
 
         .light-mode .theme-toggle {
@@ -365,6 +279,7 @@
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
 
         .difficulty-btn {
@@ -376,6 +291,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: 'Orbitron', monospace;
+            font-size: 12px;
         }
 
         .difficulty-btn.active {
@@ -387,55 +303,9 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
-        .stats-panel {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-        }
-
-        .achievements {
-            max-height: 150px;
-            overflow-y: auto;
-            margin-top: 15px;
-        }
-
-        .achievement {
-            background: rgba(255, 215, 0, 0.1);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 8px;
-            padding: 8px;
-            margin: 5px 0;
-            font-size: 12px;
-            animation: achievementPop 0.5s ease;
-        }
-
-        @keyframes achievementPop {
-            0% { transform: scale(0); opacity: 0; }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .power-up {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: radial-gradient(circle, #ffd700, #ff8c00);
-            animation: powerUpPulse 1s infinite;
-            z-index: 100;
-        }
-
-        @keyframes powerUpPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+        .light-mode .difficulty-btn {
+            color: #333;
+            border-color: rgba(0, 0, 0, 0.3);
         }
 
         @media (max-width: 768px) {
@@ -453,16 +323,10 @@
             .game-title {
                 font-size: 2em;
             }
-
-            .next-hold-container {
-                flex-direction: row;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="background-particles" id="particles"></div>
-    
     <div class="container">
         <div class="game-area">
             <h1 class="game-title">ENHANCED TETRIS</h1>
@@ -475,12 +339,12 @@
             <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark Mode</button>
             
             <div class="panel">
-                <h4>🎯 Difficulty</h4>
+                <h4 style="text-align: center; margin: 0 0 15px 0;">🎯 Difficulty</h4>
                 <div class="difficulty-selector">
-                    <button class="difficulty-btn active" onclick="setDifficulty('easy')">Easy</button>
-                    <button class="difficulty-btn" onclick="setDifficulty('normal')">Normal</button>
-                    <button class="difficulty-btn" onclick="setDifficulty('hard')">Hard</button>
-                    <button class="difficulty-btn" onclick="setDifficulty('insane')">Insane</button>
+                    <button class="difficulty-btn active" onclick="setDifficulty('easy', this)">Easy</button>
+                    <button class="difficulty-btn" onclick="setDifficulty('normal', this)">Normal</button>
+                    <button class="difficulty-btn" onclick="setDifficulty('hard', this)">Hard</button>
+                    <button class="difficulty-btn" onclick="setDifficulty('insane', this)">Insane</button>
                 </div>
             </div>
             
@@ -499,48 +363,21 @@
                     <span id="level">1</span>
                 </div>
                 <div class="score-item">
-                    <span>Combo:</span>
-                    <span id="combo">0</span>
-                </div>
-                <div class="combo-display" id="comboText"></div>
-                
-                <div class="stats-panel">
-                    <div class="stat-item">
-                        <div>Time</div>
-                        <div id="gameTime">0:00</div>
-                    </div>
-                    <div class="stat-item">
-                        <div>PPS</div>
-                        <div id="pps">0.0</div>
-                    </div>
-                    <div class="stat-item">
-                        <div>APM</div>
-                        <div id="apm">0</div>
-                    </div>
-                    <div class="stat-item">
-                        <div>Efficiency</div>
-                        <div id="efficiency">0%</div>
-                    </div>
+                    <span>Time:</span>
+                    <span id="gameTime">0:00</span>
                 </div>
             </div>
             
             <div class="panel">
                 <div class="next-hold-container">
                     <div class="next-piece-panel">
-                        <h4>Next</h4>
+                        <h4 style="color: white; margin: 0 0 10px 0;">Next</h4>
                         <canvas id="nextPieceCanvas" class="next-piece-canvas" width="120" height="80"></canvas>
                     </div>
                     <div class="hold-piece-panel">
-                        <h4>Hold</h4>
+                        <h4 style="color: white; margin: 0 0 10px 0;">Hold</h4>
                         <canvas id="holdPieceCanvas" class="hold-piece-canvas" width="120" height="80"></canvas>
                     </div>
-                </div>
-            </div>
-            
-            <div class="panel">
-                <h4>🏅 Achievements</h4>
-                <div class="achievements" id="achievements">
-                    <div style="text-align: center; opacity: 0.5;">Play to unlock achievements!</div>
                 </div>
             </div>
             
@@ -560,10 +397,10 @@
                 </div>
                 <div class="control-item">
                     <span>Rotate</span>
-                    <span class="control-key">↑ / Z</span>
+                    <span class="control-key">↑</span>
                 </div>
                 <div class="control-item">
-                    <span>Hold Piece</span>
+                    <span>Hold</span>
                     <span class="control-key">C</span>
                 </div>
                 <div class="control-item">
@@ -574,10 +411,6 @@
                     <span>Restart</span>
                     <span class="control-key">R</span>
                 </div>
-                <div class="control-item">
-                    <span>Theme</span>
-                    <span class="control-key">T</span>
-                </div>
             </div>
         </div>
     </div>
@@ -585,10 +418,8 @@
     <div id="gameOver" class="game-over" style="display: none;">
         <h2>🎮 GAME OVER</h2>
         <div style="font-size: 24px; margin: 20px 0;">Final Score: <span id="finalScore">0</span></div>
-        <div style="font-size: 18px; margin: 10px 0;">Time Played: <span id="finalTime">0:00</span></div>
-        <div style="font-size: 18px; margin: 10px 0;">Best Combo: <span id="bestCombo">0</span></div>
+        <div style="font-size: 18px; margin: 10px 0;">Time: <span id="finalTime">0:00</span></div>
         <button class="btn" onclick="restartGame()">🔄 Play Again</button>
-        <button class="btn" onclick="shareScore()">📱 Share Score</button>
     </div>
 
     <div id="pauseScreen" class="pause-screen" style="display: none;">
@@ -599,11 +430,12 @@
     </div>
 
     <script>
-        // Enhanced Game Implementation
+        // Game constants
         const BOARD_WIDTH = 10;
         const BOARD_HEIGHT = 20;
         const CELL_SIZE = 30;
         
+        // Canvas setup
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         const nextCanvas = document.getElementById('nextPieceCanvas');
@@ -611,7 +443,7 @@
         const holdCanvas = document.getElementById('holdPieceCanvas');
         const holdCtx = holdCanvas.getContext('2d');
         
-        // Enhanced Game State
+        // Game state
         let board = Array(BOARD_HEIGHT).fill().map(() => Array(BOARD_WIDTH).fill(0));
         let currentPiece = null;
         let nextPiece = null;
@@ -620,21 +452,15 @@
         let score = 0;
         let lines = 0;
         let level = 1;
-        let combo = 0;
-        let bestCombo = 0;
         let dropTime = 0;
         let dropInterval = 1000;
         let gameOver = false;
         let paused = false;
         let darkMode = true;
-        let difficulty = 'normal';
+        let difficulty = 'easy';
         let gameStartTime = Date.now();
-        let totalPieces = 0;
-        let totalActions = 0;
-        let achievements = [];
-        let powerUps = [];
         
-        // Difficulty Settings
+        // Difficulty settings
         const DIFFICULTY_SETTINGS = {
             easy: { baseSpeed: 1200, speedIncrease: 80 },
             normal: { baseSpeed: 1000, speedIncrease: 100 },
@@ -642,63 +468,61 @@
             insane: { baseSpeed: 400, speedIncrease: 150 }
         };
 
-        // Enhanced Pieces with SRS rotation
+        // Tetromino pieces
         const PIECES = {
             I: {
-                shapes: [
-                    [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]],
-                    [[0,0,1,0],[0,0,1,0],[0,0,1,0],[0,0,1,0]],
-                    [[0,0,0,0],[0,0,0,0],[1,1,1,1],[0,0,0,0]],
-                    [[0,1,0,0],[0,1,0,0],[0,1,0,0],[0,1,0,0]]
+                shape: [
+                    [0,0,0,0],
+                    [1,1,1,1],
+                    [0,0,0,0],
+                    [0,0,0,0]
                 ],
                 color: '#00FFFF'
             },
             O: {
-                shapes: [[[1,1],[1,1]]],
+                shape: [
+                    [1,1],
+                    [1,1]
+                ],
                 color: '#FFFF00'
             },
             T: {
-                shapes: [
-                    [[0,1,0],[1,1,1],[0,0,0]],
-                    [[0,1,0],[0,1,1],[0,1,0]],
-                    [[0,0,0],[1,1,1],[0,1,0]],
-                    [[0,1,0],[1,1,0],[0,1,0]]
+                shape: [
+                    [0,1,0],
+                    [1,1,1],
+                    [0,0,0]
                 ],
                 color: '#800080'
             },
             S: {
-                shapes: [
-                    [[0,1,1],[1,1,0],[0,0,0]],
-                    [[0,1,0],[0,1,1],[0,0,1]],
-                    [[0,0,0],[0,1,1],[1,1,0]],
-                    [[1,0,0],[1,1,0],[0,1,0]]
+                shape: [
+                    [0,1,1],
+                    [1,1,0],
+                    [0,0,0]
                 ],
                 color: '#00FF00'
             },
             Z: {
-                shapes: [
-                    [[1,1,0],[0,1,1],[0,0,0]],
-                    [[0,0,1],[0,1,1],[0,1,0]],
-                    [[0,0,0],[1,1,0],[0,1,1]],
-                    [[0,1,0],[1,1,0],[1,0,0]]
+                shape: [
+                    [1,1,0],
+                    [0,1,1],
+                    [0,0,0]
                 ],
                 color: '#FF0000'
             },
             J: {
-                shapes: [
-                    [[1,0,0],[1,1,1],[0,0,0]],
-                    [[0,1,1],[0,1,0],[0,1,0]],
-                    [[0,0,0],[1,1,1],[0,0,1]],
-                    [[0,1,0],[0,1,0],[1,1,0]]
+                shape: [
+                    [1,0,0],
+                    [1,1,1],
+                    [0,0,0]
                 ],
                 color: '#0000FF'
             },
             L: {
-                shapes: [
-                    [[0,0,1],[1,1,1],[0,0,0]],
-                    [[0,1,0],[0,1,0],[0,1,1]],
-                    [[0,0,0],[1,1,1],[1,0,0]],
-                    [[1,1,0],[0,1,0],[0,1,0]]
+                shape: [
+                    [0,0,1],
+                    [1,1,1],
+                    [0,0,0]
                 ],
                 color: '#FFA500'
             }
@@ -709,56 +533,17 @@
         class Tetromino {
             constructor(type) {
                 this.type = type;
-                this.shapes = PIECES[type].shapes;
+                this.shape = PIECES[type].shape;
                 this.color = PIECES[type].color;
-                this.x = Math.floor((BOARD_WIDTH - this.getCurrentShape()[0].length) / 2);
+                this.x = Math.floor((BOARD_WIDTH - this.shape[0].length) / 2);
                 this.y = 0;
-                this.rotation = 0;
             }
             
-            getCurrentShape() {
-                return this.shapes[this.rotation % this.shapes.length];
-            }
-            
-            rotate(clockwise = true) {
-                const newRotation = clockwise 
-                    ? (this.rotation + 1) % this.shapes.length
-                    : (this.rotation - 1 + this.shapes.length) % this.shapes.length;
-                    
-                // SRS wall kick tests
-                const kicks = this.getWallKicks(this.rotation, newRotation);
-                
-                for (let kick of kicks) {
-                    if (isValidMove(this, kick.x, kick.y, newRotation)) {
-                        this.x += kick.x;
-                        this.y += kick.y;
-                        this.rotation = newRotation;
-                        return true;
-                    }
-                }
-                return false;
-            }
-            
-            getWallKicks(fromRotation, toRotation) {
-                // Simplified SRS wall kicks
-                const kicks = [
-                    {x: 0, y: 0}, {x: -1, y: 0}, {x: 1, y: 0},
-                    {x: 0, y: -1}, {x: -1, y: -1}, {x: 1, y: -1}
-                ];
-                return kicks;
-            }
-        }
-        
-        // Initialize particles
-        function createParticles() {
-            const container = document.getElementById('particles');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 6 + 's';
-                particle.style.animationDuration = (3 + Math.random() * 3) + 's';
-                container.appendChild(particle);
+            rotate() {
+                const newShape = this.shape[0].map((_, i) => 
+                    this.shape.map(row => row[i]).reverse()
+                );
+                return newShape;
             }
         }
         
@@ -767,9 +552,8 @@
             return new Tetromino(type);
         }
         
-        function isValidMove(piece, dx = 0, dy = 0, newRotation = null) {
-            const rotation = newRotation !== null ? newRotation : piece.rotation;
-            const shape = piece.shapes[rotation % piece.shapes.length];
+        function isValidMove(piece, dx = 0, dy = 0, newShape = null) {
+            const shape = newShape || piece.shape;
             const newX = piece.x + dx;
             const newY = piece.y + dy;
             
@@ -791,10 +575,9 @@
         }
         
         function placePiece(piece) {
-            const shape = piece.getCurrentShape();
-            for (let y = 0; y < shape.length; y++) {
-                for (let x = 0; x < shape[y].length; x++) {
-                    if (shape[y][x]) {
+            for (let y = 0; y < piece.shape.length; y++) {
+                for (let x = 0; x < piece.shape[y].length; x++) {
+                    if (piece.shape[y][x]) {
                         const boardY = piece.y + y;
                         const boardX = piece.x + x;
                         if (boardY >= 0) {
@@ -803,16 +586,12 @@
                     }
                 }
             }
-            totalPieces++;
         }
         
         function clearLines() {
             let linesCleared = 0;
-            let clearedRows = [];
-            
             for (let y = BOARD_HEIGHT - 1; y >= 0; y--) {
                 if (board[y].every(cell => cell !== 0)) {
-                    clearedRows.push(y);
                     board.splice(y, 1);
                     board.unshift(Array(BOARD_WIDTH).fill(0));
                     linesCleared++;
@@ -821,33 +600,13 @@
             }
             
             if (linesCleared > 0) {
-                // Enhanced scoring with combo system
-                const basePoints = [0, 100, 300, 500, 800][linesCleared];
-                const comboBonus = combo * 50;
-                const levelBonus = level * 10;
-                const points = (basePoints + comboBonus + levelBonus) * getDifficultyMultiplier();
-                
+                const points = [0, 100, 300, 500, 800][linesCleared] * level;
                 score += points;
                 lines += linesCleared;
-                combo++;
-                bestCombo = Math.max(bestCombo, combo);
                 level = Math.floor(lines / 10) + 1;
-                
                 updateDropSpeed();
-                updateComboDisplay();
-                checkAchievements(linesCleared);
-                
-                // Visual effects for line clears
-                animateLineClear(clearedRows);
-            } else {
-                combo = 0;
-                updateComboDisplay();
+                updateUI();
             }
-        }
-        
-        function getDifficultyMultiplier() {
-            const multipliers = { easy: 0.8, normal: 1.0, hard: 1.3, insane: 1.6 };
-            return multipliers[difficulty];
         }
         
         function updateDropSpeed() {
@@ -855,136 +614,18 @@
             dropInterval = Math.max(50, settings.baseSpeed - (level - 1) * settings.speedIncrease);
         }
         
-        function updateComboDisplay() {
-            const comboElement = document.getElementById('combo');
-            const comboTextElement = document.getElementById('comboText');
-            
-            comboElement.textContent = combo;
-            
-            if (combo > 0) {
-                comboTextElement.textContent = `${combo} COMBO!`;
-                comboTextElement.style.color = combo > 5 ? '#ff6b6b' : '#4ecdc4';
-            } else {
-                comboTextElement.textContent = '';
-            }
-        }
-        
-        function animateLineClear(rows) {
-            // Create flash effect for cleared lines
-            rows.forEach(row => {
-                setTimeout(() => {
-                    // Flash effect would be implemented here
-                }, 100);
-            });
-        }
-        
-        function checkAchievements(linesCleared) {
-            const newAchievements = [];
-            
-            // Score milestones
-            if (score >= 10000 && !achievements.includes('10K Master')) {
-                newAchievements.push('🏆 10K Master: Reached 10,000 points!');
-                achievements.push('10K Master');
-            }
-            if (score >= 50000 && !achievements.includes('50K Legend')) {
-                newAchievements.push('👑 50K Legend: Reached 50,000 points!');
-                achievements.push('50K Legend');
-            }
-            
-            // Line clear achievements
-            if (lines >= 100 && !achievements.includes('Century')) {
-                newAchievements.push('💯 Century: Cleared 100 lines!');
-                achievements.push('Century');
-            }
-            
-            // Combo achievements
-            if (combo >= 5 && !achievements.includes('Combo King')) {
-                newAchievements.push('🔥 Combo King: 5+ combo streak!');
-                achievements.push('Combo King');
-            }
-            if (combo >= 10 && !achievements.includes('Combo Master')) {
-                newAchievements.push('⚡ Combo Master: 10+ combo streak!');
-                achievements.push('Combo Master');
-            }
-            
-            // Special line clear achievements
-            if (linesCleared === 4 && !achievements.includes('Tetris Master')) {
-                newAchievements.push('🎯 Tetris Master: First Tetris clear!');
-                achievements.push('Tetris Master');
-            }
-            
-            // Speed achievements
-            if (level >= 10 && !achievements.includes('Speed Demon')) {
-                newAchievements.push('🚀 Speed Demon: Reached level 10!');
-                achievements.push('Speed Demon');
-            }
-            
-            // Display new achievements
-            newAchievements.forEach(achievement => {
-                displayAchievement(achievement);
-            });
-        }
-        
-        function displayAchievement(achievement) {
-            const container = document.getElementById('achievements');
-            if (container.children[0]?.textContent.includes('Play to unlock')) {
-                container.innerHTML = '';
-            }
-            
-            const achievementElement = document.createElement('div');
-            achievementElement.className = 'achievement';
-            achievementElement.textContent = achievement;
-            container.appendChild(achievementElement);
-            
-            // Scroll to bottom
-            container.scrollTop = container.scrollHeight;
-        }
-        
         function drawCell(ctx, x, y, color, size = CELL_SIZE) {
             if (color) {
-                // Enhanced cell rendering with gradients
-                const gradient = ctx.createLinearGradient(
-                    x * size, y * size, 
-                    x * size + size, y * size + size
-                );
-                gradient.addColorStop(0, color);
-                gradient.addColorStop(1, darkenColor(color, 0.3));
-                
-                ctx.fillStyle = gradient;
+                ctx.fillStyle = color;
                 ctx.fillRect(x * size, y * size, size, size);
-                
-                // Highlight
-                ctx.fillStyle = lightenColor(color, 0.3);
-                ctx.fillRect(x * size, y * size, size/6, size);
-                ctx.fillRect(x * size, y * size, size, size/6);
-                
-                // Border
                 ctx.strokeStyle = darkMode ? '#fff' : '#000';
                 ctx.lineWidth = 1;
                 ctx.strokeRect(x * size, y * size, size, size);
             }
         }
         
-        function lightenColor(color, amount) {
-            const hex = color.replace('#', '');
-            const num = parseInt(hex, 16);
-            const r = Math.min(255, (num >> 16) + Math.round(255 * amount));
-            const g = Math.min(255, ((num >> 8) & 0x00FF) + Math.round(255 * amount));
-            const b = Math.min(255, (num & 0x0000FF) + Math.round(255 * amount));
-            return `rgb(${r}, ${g}, ${b})`;
-        }
-        
-        function darkenColor(color, amount) {
-            const hex = color.replace('#', '');
-            const num = parseInt(hex, 16);
-            const r = Math.max(0, (num >> 16) - Math.round(255 * amount));
-            const g = Math.max(0, ((num >> 8) & 0x00FF) - Math.round(255 * amount));
-            const b = Math.max(0, (num & 0x0000FF) - Math.round(255 * amount));
-            return `rgb(${r}, ${g}, ${b})`;
-        }
-        
         function drawBoard() {
-            // Clear canvas with theme-appropriate background
+            // Clear canvas
             ctx.fillStyle = darkMode ? '#1a1a2e' : '#f8f8f8';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
@@ -997,16 +638,15 @@
                 }
             }
             
-            // Draw current piece with drop shadow
+            // Draw current piece
             if (currentPiece && !gameOver && !paused) {
-                // Draw ghost piece (drop preview)
+                // Draw ghost piece first
                 drawGhostPiece();
                 
                 // Draw current piece
-                const shape = currentPiece.getCurrentShape();
-                for (let y = 0; y < shape.length; y++) {
-                    for (let x = 0; x < shape[y].length; x++) {
-                        if (shape[y][x]) {
+                for (let y = 0; y < currentPiece.shape.length; y++) {
+                    for (let x = 0; x < currentPiece.shape[y].length; x++) {
+                        if (currentPiece.shape[y][x]) {
                             drawCell(ctx, currentPiece.x + x, currentPiece.y + y, currentPiece.color);
                         }
                     }
@@ -1028,20 +668,6 @@
                 ctx.lineTo(BOARD_WIDTH * CELL_SIZE, y * CELL_SIZE);
                 ctx.stroke();
             }
-            
-            // Draw power-ups
-            powerUps.forEach(powerUp => {
-                ctx.fillStyle = '#ffd700';
-                ctx.beginPath();
-                ctx.arc(
-                    (powerUp.x + 0.5) * CELL_SIZE,
-                    (powerUp.y + 0.5) * CELL_SIZE,
-                    CELL_SIZE / 3,
-                    0,
-                    Math.PI * 2
-                );
-                ctx.fill();
-            });
         }
         
         function drawGhostPiece() {
@@ -1054,11 +680,10 @@
             }
             
             // Draw ghost piece
-            const shape = currentPiece.getCurrentShape();
             ctx.globalAlpha = 0.3;
-            for (let y = 0; y < shape.length; y++) {
-                for (let x = 0; x < shape[y].length; x++) {
-                    if (shape[y][x]) {
+            for (let y = 0; y < currentPiece.shape.length; y++) {
+                for (let x = 0; x < currentPiece.shape[y].length; x++) {
+                    if (currentPiece.shape[y][x]) {
                         ctx.fillStyle = currentPiece.color;
                         ctx.fillRect(
                             (currentPiece.x + x) * CELL_SIZE,
@@ -1084,13 +709,12 @@
             nextCtx.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
             
             if (nextPiece) {
-                const shape = nextPiece.getCurrentShape();
-                const offsetX = (6 - shape[0].length) / 2;
-                const offsetY = (4 - shape.length) / 2;
+                const offsetX = (6 - nextPiece.shape[0].length) / 2;
+                const offsetY = (4 - nextPiece.shape.length) / 2;
                 
-                for (let y = 0; y < shape.length; y++) {
-                    for (let x = 0; x < shape[y].length; x++) {
-                        if (shape[y][x]) {
+                for (let y = 0; y < nextPiece.shape.length; y++) {
+                    for (let x = 0; x < nextPiece.shape[y].length; x++) {
+                        if (nextPiece.shape[y][x]) {
                             drawCell(nextCtx, offsetX + x, offsetY + y, nextPiece.color, 20);
                         }
                     }
@@ -1103,16 +727,14 @@
             holdCtx.fillRect(0, 0, holdCanvas.width, holdCanvas.height);
             
             if (heldPiece) {
-                const shape = heldPiece.getCurrentShape();
-                const offsetX = (6 - shape[0].length) / 2;
-                const offsetY = (4 - shape.length) / 2;
+                const offsetX = (6 - heldPiece.shape[0].length) / 2;
+                const offsetY = (4 - heldPiece.shape.length) / 2;
                 
-                // Dim the held piece if it can't be used
                 holdCtx.globalAlpha = canHold ? 1.0 : 0.5;
                 
-                for (let y = 0; y < shape.length; y++) {
-                    for (let x = 0; x < shape[y].length; x++) {
-                        if (shape[y][x]) {
+                for (let y = 0; y < heldPiece.shape.length; y++) {
+                    for (let x = 0; x < heldPiece.shape[y].length; x++) {
+                        if (heldPiece.shape[y][x]) {
                             drawCell(holdCtx, offsetX + x, offsetY + y, heldPiece.color, 20);
                         }
                     }
@@ -1133,18 +755,6 @@
             const seconds = gameTime % 60;
             document.getElementById('gameTime').textContent = 
                 `${minutes}:${seconds.toString().padStart(2, '0')}`;
-            
-            // Update PPS (Pieces Per Second)
-            const pps = gameTime > 0 ? (totalPieces / gameTime).toFixed(1) : '0.0';
-            document.getElementById('pps').textContent = pps;
-            
-            // Update APM (Actions Per Minute)
-            const apm = gameTime > 0 ? Math.round((totalActions / gameTime) * 60) : 0;
-            document.getElementById('apm').textContent = apm;
-            
-            // Update efficiency
-            const efficiency = totalPieces > 0 ? Math.round((lines * 4 / totalPieces) * 100) : 0;
-            document.getElementById('efficiency').textContent = efficiency + '%';
         }
         
         function spawnNewPiece() {
@@ -1156,7 +766,6 @@
                 gameOver = true;
                 document.getElementById('finalScore').textContent = score.toLocaleString();
                 document.getElementById('finalTime').textContent = document.getElementById('gameTime').textContent;
-                document.getElementById('bestCombo').textContent = bestCombo;
                 document.getElementById('gameOver').style.display = 'flex';
             }
             
@@ -1172,10 +781,9 @@
                 currentPiece = heldPiece;
                 heldPiece = temp;
                 
-                // Reset position and rotation
-                currentPiece.x = Math.floor((BOARD_WIDTH - currentPiece.getCurrentShape()[0].length) / 2);
+                // Reset position
+                currentPiece.x = Math.floor((BOARD_WIDTH - currentPiece.shape[0].length) / 2);
                 currentPiece.y = 0;
-                currentPiece.rotation = 0;
             } else {
                 // Hold current piece and spawn next
                 heldPiece = currentPiece;
@@ -1184,22 +792,21 @@
             
             canHold = false;
             drawHeldPiece();
-            totalActions++;
         }
         
         function movePiece(dx, dy) {
             if (isValidMove(currentPiece, dx, dy)) {
                 currentPiece.x += dx;
                 currentPiece.y += dy;
-                if (dx !== 0) totalActions++;
                 return true;
             }
             return false;
         }
         
-        function rotatePiece(clockwise = true) {
-            if (currentPiece.rotate(clockwise)) {
-                totalActions++;
+        function rotatePiece() {
+            const rotatedShape = currentPiece.rotate();
+            if (isValidMove(currentPiece, 0, 0, rotatedShape)) {
+                currentPiece.shape = rotatedShape;
             }
         }
         
@@ -1211,7 +818,6 @@
             score += dropDistance * 2;
             updateUI();
             lockPiece();
-            totalActions++;
         }
         
         function lockPiece() {
@@ -1225,12 +831,19 @@
             document.body.classList.toggle('light-mode');
             const btn = document.querySelector('.theme-toggle');
             btn.textContent = darkMode ? '🌙 Dark Mode' : '☀️ Light Mode';
+            
+            // Update canvas headers for light mode
+            const headers = document.querySelectorAll('.next-piece-panel h4, .hold-piece-panel h4');
+            headers.forEach(header => {
+                header.style.color = darkMode ? 'white' : '#333';
+            });
+            
             drawBoard();
             drawNextPiece();
             drawHeldPiece();
         }
         
-        function setDifficulty(newDifficulty) {
+        function setDifficulty(newDifficulty, element) {
             difficulty = newDifficulty;
             updateDropSpeed();
             
@@ -1238,7 +851,7 @@
             document.querySelectorAll('.difficulty-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            event.target.classList.add('active');
+            element.classList.add('active');
         }
         
         function togglePause() {
@@ -1259,8 +872,6 @@
             score = 0;
             lines = 0;
             level = 1;
-            combo = 0;
-            bestCombo = 0;
             dropTime = 0;
             dropInterval = 1000;
             gameOver = false;
@@ -1270,9 +881,6 @@
             heldPiece = null;
             canHold = true;
             gameStartTime = Date.now();
-            totalPieces = 0;
-            totalActions = 0;
-            powerUps = [];
             
             updateDropSpeed();
             
@@ -1280,32 +888,19 @@
             document.getElementById('pauseScreen').style.display = 'none';
             
             updateUI();
-            updateComboDisplay();
             spawnNewPiece();
             drawHeldPiece();
             gameLoop();
         }
         
-        function shareScore() {
-            const text = `🎮 Just scored ${score.toLocaleString()} points in Enhanced Tetris! Level ${level}, ${lines} lines cleared, best combo: ${bestCombo}x! Can you beat it? #Tetris #Gaming`;
-            
-            if (navigator.share) {
-                navigator.share({
-                    title: 'My Tetris Score',
-                    text: text,
-                    url: window.location.href
-                });
-            } else {
-                // Fallback to clipboard
-                navigator.clipboard.writeText(text).then(() => {
-                    alert('Score copied to clipboard!');
-                });
-            }
-        }
-        
         // Event listeners
         document.addEventListener('keydown', (e) => {
-            if (gameOver) return;
+            if (gameOver) {
+                if (e.key === 'r' || e.key === 'R') {
+                    restartGame();
+                }
+                return;
+            }
             
             if (e.key === 'p' || e.key === 'P') {
                 togglePause();
@@ -1316,25 +911,23 @@
             
             switch(e.key) {
                 case 'ArrowLeft':
+                    e.preventDefault();
                     movePiece(-1, 0);
                     break;
                 case 'ArrowRight':
+                    e.preventDefault();
                     movePiece(1, 0);
                     break;
                 case 'ArrowDown':
+                    e.preventDefault();
                     if (movePiece(0, 1)) {
                         score += 1;
                         updateUI();
                     }
                     break;
                 case 'ArrowUp':
-                case 'z':
-                case 'Z':
-                    rotatePiece(true);
-                    break;
-                case 'x':
-                case 'X':
-                    rotatePiece(false);
+                    e.preventDefault();
+                    rotatePiece();
                     break;
                 case ' ':
                     e.preventDefault();
@@ -1342,18 +935,71 @@
                     break;
                 case 'c':
                 case 'C':
+                    e.preventDefault();
                     holdPiece();
                     break;
                 case 'r':
                 case 'R':
+                    e.preventDefault();
                     restartGame();
                     break;
                 case 't':
                 case 'T':
+                    e.preventDefault();
                     toggleTheme();
                     break;
             }
             drawBoard();
+        });
+        
+        // Touch controls for mobile
+        let touchStartX = 0;
+        let touchStartY = 0;
+        
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        });
+        
+        canvas.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            if (!currentPiece || gameOver || paused) return;
+            
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+            
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            
+            const minSwipeDistance = 30;
+            
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                // Horizontal swipe
+                if (Math.abs(deltaX) > minSwipeDistance) {
+                    if (deltaX > 0) {
+                        movePiece(1, 0); // Swipe right
+                    } else {
+                        movePiece(-1, 0); // Swipe left
+                    }
+                }
+            } else {
+                // Vertical swipe
+                if (Math.abs(deltaY) > minSwipeDistance) {
+                    if (deltaY > 0) {
+                        hardDrop(); // Swipe down
+                    } else {
+                        rotatePiece(); // Swipe up
+                    }
+                }
+            }
+            
+            drawBoard();
+        });
+        
+        // Prevent scrolling on touch
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
         });
         
         let lastTime = 0;
@@ -1378,10 +1024,16 @@
         }
         
         // Initialize game
-        createParticles();
-        spawnNewPiece();
-        updateUI();
-        gameLoop();
-         </script>
+        function initGame() {
+            spawnNewPiece();
+            updateUI();
+            drawHeldPiece();
+            gameLoop();
+        }
+        
+        // Start the game when page loads
+        window.addEventListener('load', initGame);
+    </script>
 </body>
 </html>
+     
